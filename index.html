@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Pirganj TSC Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-bg: #111827; /* গাঢ় থিম ব্যাকগ্রাউন্ড */
+            --header-blue: #0b1cb3; /* আপনার ইমেজের অ্যাপ বার কালার */
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { padding: 0; margin: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ইমেজের মতো প্রিমিয়াম অ্যাপ বার */
+        .app-bar {
+            background-color: var(--header-blue);
+            color: white;
+            padding: 14px 20px;
+            box-shadow: 0 4px 12px rgba(11, 28, 179, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+        .menu-btn, .search-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-btn:hover, .search-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+        .app-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* ইমেজ স্লাইডার (Carousel) স্টাইল */
+        .slider-container {
+            max-width: 700px;
+            margin: 25px auto 15px auto;
+            padding: 0 15px;
+        }
+        .carousel-inner {
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+            width: 100%;
+            background-color: #e2e8f0;
+        }
+        /* গোল ইন্ডিকেটর ডটস (ঠিক আপনার ইমেজের মতো) */
+        .carousel-indicators [data-bs-target] {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+            border: 2px solid transparent;
+            margin: 0 5px;
+            opacity: 1;
+            transition: var(--transition);
+        }
+        .carousel-indicators .active {
+            background-color: #0b1cb3; /* একটি নির্দিষ্ট ডট ব্লু থাকবে */
+            transform: scale(1.2);
+        }
+
+        /* প্রতিষ্ঠানের নাম ও বিবরণী */
+        .info-section {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .info-icon-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .info-icon {
+            font-size: 24px;
+            color: #64748b;
+        }
+        .institution-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .institution-location {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #334155;
+            margin-top: 5px;
+        }
+
+        /* সাইডবার (Offcanvas) কাস্টমাইজেশন */
+        .offcanvas {
+            width: 300px !important;
+            background-color: #ffffff;
+            border-right: none;
+            box-shadow: 20px 0 40px rgba(0,0,0,0.05);
+        }
+        .offcanvas-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 24px 20px;
+        }
+        .offcanvas-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .offcanvas-body {
+            padding: 20px 15px;
+        }
+        
+        /* সাইডবার মেনু বাটন লিঙ্কসমূহ */
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 18px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        .menu-link i {
+            font-size: 20px;
+            color: #64748b;
+            transition: var(--transition);
+        }
+        .menu-link:hover {
+            background-color: #f1f5f9;
+            color: #0b1cb3;
+        }
+        .menu-link:hover i {
+            color: #0b1cb3;
+            transform: translateX(3px);
+        }
+        .menu-link.active {
+            background-color: rgba(11, 28, 179, 0.08);
+            color: #0b1cb3;
+        }
+        .menu-link.active i {
+            color: #0b1cb3;
+        }
+
+        /* ফুটার ক্রেডিট */
+        .footer-txt {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+            margin-top: auto;
+            border-top: 1px solid #e2e8f0;
+            background-color: #ffffff;
+        }
+
+        @media screen and (max-width: 768px) {
+            .app-title { font-size: 1.15rem; }
+            .carousel-item img { height: 260px; }
+            .institution-name { font-size: 1.35rem; }
+            .institution-location { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+  <header class="app-bar d-flex justify-content-between align-items-center">
+      <button class="menu-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+          <i class="bi bi-list"></i>
+      </button>
+      <h1 class="app-title">Pirganj TSC Thakurgaon</h1>
+      <button class="search-btn" type="button">
+      </button>
+  </header>
+
+  <main class="slider-container">
+      <div id="imageSlider" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3500">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="5" aria-label="Slide 6"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="6" aria-label="Slide 7"></button>
+          </div>
+          
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="img00.jpeg" alt="Building Image">
+            </div>
+            <div class="carousel-item">
+              <img src="img01.jpeg" alt="Campus Life">
+            </div>
+            <div class="carousel-item">
+              <img src="img02.jpeg" alt="Students Academic">
+            </div>
+            <div class="carousel-item">
+              <img src="img03.jpeg" alt="Technical Workshop">
+            </div>
+            <div class="carousel-item">
+              <img src="img04.jpeg" alt="Campus Life">
+            </div>
+            <div class="carousel-item">
+              <img src="img05.jpeg" alt="Students Academic">
+            </div>
+            <div class="carousel-item">
+              <img src="img06.jpeg" alt="Technical Workshop">
+            </div>
+          </div>
+      </div>
+  </main>
+
+  <section class="info-section text-center">
+      <div class="info-icon-wrapper">
+          <h2 class="institution-name">পীরগঞ্জ সরকারি টেকনিক্যাল স্কুল ও কলেজ</h2>
+      </div>
+      <div class="institution-location text-muted">পীরগঞ্জ, ঠাকুরগাঁও</div>
+  </section>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarMenuLabel">
+            <i class="bi bi-grid-1x2-fill"></i> Navigation Menu
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="d-flex flex-column">
+            <a href="#" class="menu-link active">
+                <i class="bi bi-house-door-fill"></i> Home
+            </a>
+            <a href="marks.html" class="menu-link">
+                <i class="bi bi-pencil-square"></i> Marks Entry Portal
+            </a>
+            <a href="result.html" class="menu-link">
+                <i class="bi bi-file-earmark-person-fill"></i> Academic Result
+            </a>
+            <hr class="text-muted">
+            <a href="#" class="menu-link">
+                <i class="bi bi-telephone-fill"></i> Contact & Support
+            </a>
+        </nav>
+      </div>
+  </div>
+ 
+  <footer class="container-fluid text-center py-3 footer-txt"> 
+       <div class="fw-bold text-dark">Developed By Jiten Chandra Roy</div>
+       <div>Instructor (Civil) | Pirganj Govt. TSC, Thakurgaon</div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

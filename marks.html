@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #1e7e34;
+            --primary-gradient: linear-gradient(135deg, #11998e, #38ef7d);
+            --dark-bg: #0f172a;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * { padding: 0; margin: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* আধুনিক ফুল-পেজ লোডার */
+        .loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+        }
+        .circular_loader {
+            width: 60px; height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #38ef7d;
+            border-radius: 50%;
+            animation: load 0.8s linear infinite;
+        }
+
+        /* টপ ব্যানার */
+        .top_container {
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 20px rgba(17, 153, 142, 0.3);
+            border-radius: 0 0 24px 24px;
+        }
+        #logo {
+            height: 70px; width: 70px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            box-shadow: var(--card-shadow);
+            object-fit: cover;
+        }
+        .heading_txt {
+            font-size: 1.6rem;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        /* নোটিশ মার্কি */
+        .notice-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        /* স্মার্ট কাউন্টডাউন টাইমার */
+        .countdown-container {
+            gap: 12px;
+        }
+        .countdown {
+            width: 70px; height: 75px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        .countdown:hover { transform: translateY(-3px); }
+        .countdown span:first-child {
+            font-size: 24px; font-weight: 700; color: #0f172a; line-height: 1.2;
+        }
+        .countdown span:last-child {
+            font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;
+        }
+
+        /* মডার্ন কার্ড ও ইনপুট কন্ট্রোল */
+        .main-card {
+            background: #ffffff;
+            border: none;
+            border-radius: 18px;
+            box-shadow: var(--card-shadow);
+            padding: 24px;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+        .form-select, .mark_input {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 15px;
+            color: #334155;
+            transition: var(--transition);
+        }
+        .form-select:focus, .mark_input:focus {
+            border-color: #11998e;
+            box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.15);
+            outline: none;
+        }
+
+        /* প্রিমিয়াম বাটন */
+        .btn-modern {
+            background: var(--primary-gradient);
+            border: none; color: white;
+            padding: 12px 30px; font-weight: 600;
+            border-radius: 10px; box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+            transition: var(--transition);
+        }
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+            color: white;
+        }
+
+        /* আধুনিক টেবিল ডিজাইন */
+        .table-responsive-custom {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #edf2f7;
+        }
+        .table { margin-bottom: 0; }
+        .table thead {
+            background: #f1f5f9;
+        }
+        .table thead th {
+            color: #475569; font-weight: 700; border: none; padding: 15px;
+        }
+        .table tbody tr {
+            transition: var(--transition);
+            vertical-align: middle;
+        }
+        .table tbody tr:hover { background-color: #f8fafc; }
+        .table td { padding: 14px; border-bottom: 1px solid #f1f5f9; color: #334155; }
+        
+        .mark_input {
+            width: 90px; text-align: center; font-weight: 600; padding: 6px;
+        }
+
+        /* ফুটনোট এবং ফিক্সড মেসেজ বক্স */
+        .success-banner {
+            border-radius: 12px; font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .footer-txt {
+            font-size: 13px; color: #64748b; line-height: 1.6;
+        }
+
+        @keyframes load { 100% { transform: rotate(360deg); } }
+
+        /* মোবাইল স্ক্রিন অপ্টিমাইজেশন */
+        @media screen and (max-width: 768px) {
+            .heading_txt { font-size: 1.2rem; text-align: center; }
+            #logo { height: 55px; width: 55px; }
+            .main-card { padding: 16px; }
+            .countdown { width: 60px; height: 65px; }
+            .countdown span:first-child { font-size: 18px; }
+            .table td, .table th { padding: 10px 8px; font-size: 14px; }
+            .mark_input { width: 75px; padding: 5px; }
+        }
+    </style>
+    <title>Marks Entry</title>
+</head>
+<body>
+
+  <div class="loader"><div class="circular_loader"></div></div>
+
+  <div class="top_container container-fluid px-3 py-4 mb-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column flex-sm-row justify-content-center align-items-center text-white heading_txt fw-bold gap-3">
+              <img id="logo" src="logo.jpg" alt="Logo"/>
+              <div class="text-center text-sm-start">পীরগঞ্জ সরকারি টেকনিক্যাল স্কুল ও কলেজ</div>
+           </div>
+        </div>     
+  </div>
+
+  <div class="container mb-4">
+    <div class="row g-3">
+      <div class="col-12">
+          <div class="notice-box">
+              <marquee scrollamount="4">*** মধ্যবর্ষ পরীক্ষার ফলাফল <span style="color: red; font-weight:bold;"> ৩০-০৭-২০২৬ তারিখ সকাল ১০.০০ টায় </span> প্রকাশিত হবে। আপনাদেরকে এই অনলাইন সিস্টেমের মাধ্যমে আগামী <b> ২৮-০৭-২০২৬ </b> তারিখের মধ্যেই Marks Submit করার জন্য বলা হইল ***</marquee>
+          </div>
+      </div>
+      <div class="col-12 d-flex flex-column align-items-center my-2">
+         <div class="text-uppercase fw-bold text-secondary mb-2" style="font-size: 12px; letter-spacing: 1px;">Time Remaining</div>
+         <div class="d-flex countdown-container">
+            <div class="countdown"><span id="day">-</span><span>Day</span></div>
+            <div class="countdown"><span id="hour">-</span><span>Hr</span></div>
+            <div class="countdown"><span id="minute">-</span><span>Min</span></div>
+            <div class="countdown"><span id="second">-</span><span>Sec</span></div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mb-4">
+      <div class="main-card">
+          <div class="row g-3">
+              <div class="col-12 col-md-6 col-lg-3">
+                  <label class="form-label">শ্রেণি</label>
+                  <select id="select_cls" class="form-select">
+                        <option value="class_6">ষষ্ঠ শ্রেণি</option>
+                        <option value="class_7">সপ্তম শ্রেণি</option>
+                        <option value="class_8">অষ্টম শ্রেণি</option>
+                        <option value="class_9">নবম শ্রেণি</option>
+                        <option value="class_10">দশম শ্রেণি</option>
+                        <option value="class_11">একাদশ শ্রেণি</option>
+                        <option value="class_12">দ্বাদশ শ্রেণি</option>
+                  </select>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                  <label class="form-label">পরীক্ষা</label>
+                  <select class="form-select">
+                        <option value="6">বার্ষিক পরীক্ষা</option>
+                        <option value="7">বর্ষমধ্য পরীক্ষা</option>
+                  </select>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                  <label class="form-label">শাখা / ট্রেড</label>
+                  <select id="select_sec" class="form-select"></select>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                  <label class="form-label">বিষয়</label>
+                  <select id="select_sub" class="form-select"></select>
+              </div>
+              <div class="col-12 d-flex justify-content-center mt-4">
+                  <button id="btnFind" class="btn btn-modern px-5" onclick="fetchStudents()">Search Students</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div id="msgContainer" class="container mb-4"></div>
+
+  <div class="mark_table container mb-5">
+      <div class="table-responsive-custom">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="10%">SL</th>
+                  <th width="25%">রোল নম্বর</th>
+                  <th width="45%">পরীক্ষার্থীর নাম</th>
+                  <th width="20%" class="text-center">প্রাপ্ত নম্বর</th>
+                </tr>
+              </thead>
+              <tbody id="mytbody">
+                  <tr>
+                      <td colspan="4" class="text-center py-4 text-muted">ড্রপডাউন সিলেক্ট করে Search Students বাটনে ক্লিক করুন।</td>
+                  </tr>
+              </tbody>
+            </table>
+      </div>
+      <div class="btn_row row mt-4">
+           <div class="col-12 d-flex justify-content-center">
+                <button id="btnSubmit" class="btn btn-modern bg-dark px-5" style="background: #0f172a; box-shadow: 0 4px 15px rgba(15,23,42,0.2);" onclick="submitMarks()">Submit Marks</button>
+           </div>
+      </div>
+  </div>
+ 
+  <div class="container text-center mt-auto pb-4 footer-txt"> 
+       <div class="fw-bold text-dark">Developed By Jiten Chandra Roy</div>
+       <div>Instructor (Civil) | Pirganj Govt. Technical School & College</div>
+       <div class="text-muted">Pirganj, Thakurgaon</div>
+  </div>
+
+<script id="jquery" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  $(window).on('load', function(){ setTimeout(removeLoader, 800); });
+  function removeLoader(){ $(".loader").fadeOut(400); }
+
+  const selectSub = document.getElementById('select_sub');
+  const selectSec = document.getElementById('select_sec');
+  const selectCls = document.getElementById('select_cls');
+  selectCls.onchange = function() { addSubOptions(); addSectionTradeOptions(); }
+
+  // ⚠️ আপনার Google Apps Script এর আসল Web App URL এখানে বসান
+  const API_URL = "https://script.google.com/macros/s/AKfycbxnWA0bDbedCxMSNms35AUNFBREuCFrLj7bHMJAYW1wGxw6-V_EidSf4RnzE_qWtJFSvA/exec"; 
+
+  function addSubOptions(){
+    selectSub.length = 0;
+    var subOption_values9 = ["Ban", "Eng", "Math", "BGS", "Phy", "Chem", "ICT", "ED", "Re", "Trade1", "Trade2", "Op"];
+    var subOption_values10 = ["Ban", "Eng", "Math", "BGS", "Phy", "Chem", "ICT", "SW", "Re", "Trade1", "Trade2", "Op"];
+    var subOption_values678 = ["Ban1", "Ban2", "Eng1", "Eng2", "Math", "Science", "BGS", "WBE", "Re", "ICT"];
+
+    var subOption_text9 = ["বাংলা-১", "ইংরেজি-১", "গনিত-১", "বাংলাদেশ ও বি. প.-১", "পদার্থ বিজ্ঞান-১", "রসায়ন বিজ্ঞান-১", "আইসিটি-১", "ইঞ্জি ড্রয়িং-১", "ধর্ম-১", "ট্রেড-১", "ট্রেড-২", "ঐচ্ছিক বিষয়-১"];
+    var subOption_text10 =  ["বাংলা-২", "ইংরেজি-২", "গনিত-২", "বাংলাদেশ ও বি. প.-২", "পদার্থ বিজ্ঞান-২", "রসায়ন বিজ্ঞান-২", "আইসিটি-২", "আত্মকর্ম", "ধর্ম-২", "ট্রেড-১", "ট্রেড-২", "ঐচ্ছিক বিষয়-২"];
+    var subOption_text678 = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজি ১ম", "ইংরেজি ২য়", "গণিত", "বিজ্ঞান", "বাংলাদেশ ও বি.প.", "কর্মমুখি শিক্ষা", "ধর্ম", "আইসিটি"];
+
+    if(selectCls.value=="class_9"){
+      for(var i = 0; i <subOption_values9.length; i++){
+        selectSub.add(new Option(subOption_text9[i], subOption_values9[i]));
+      }
+    }
+    if(selectCls.value=="class_10" || selectCls.value=="class_11" || selectCls.value=="class_12"){
+      for(var i = 0; i <subOption_values10.length; i++){
+        selectSub.add(new Option(subOption_text10[i], subOption_values10[i]));
+      }
+    }
+    if(selectCls.value=="class_6" || selectCls.value == "class_7" || selectCls.value == "class_8"){
+       for(var i = 0; i <subOption_values678.length; i++){
+        selectSub.add(new Option(subOption_text678[i], subOption_values678[i]));
+       }
+    }
+  }
+
+  function addSectionTradeOptions(){
+    selectSec.length = 0;
+    if(selectCls.value=="class_9" || selectCls.value == "class_10" || selectCls.value=="class_11" || selectCls.value=="class_12"){
+        selectSec.add(new Option("এপারেল", "A"));
+        selectSec.add(new Option("সিভিল", "C"));
+        selectSec.add(new Option("ইলেক্ট্রনিকস", "E"));
+        selectSec.add(new Option("ওয়েল্ডিং", "W"));
+    }
+    if(selectCls.value=="class_6" || selectCls.value == "class_7" || selectCls.value == "class_8"){
+        selectSec.add(new Option("ক", "A"));
+        selectSec.add(new Option("খ", "B"));
+    }
+  }
+
+  async function fetchStudents(){
+      $(".loader").flexDisp = "flex";
+      document.querySelector(".loader").style.display = "flex";
+      document.getElementById("mytbody").innerHTML = "";
+
+      const url = `${API_URL}?action=getStudents&class=${selectCls.value}&section=${selectSec.value}&subject=${selectSub.value}&_=${new Date().getTime()}`;
+
+      try {
+          const response = await fetch(url);
+          if(!response.ok) throw new Error("Network response error");
+          const dta = await response.json();
+          showTable(dta);
+      } catch (error) {
+          console.error(error);
+          alert("ডেটা লোড করতে সমস্যা হয়েছে!");
+          setTimeout(removeLoader, 400);
+      }
+  }
+
+  function showTable(dta){
+    if (dta && dta.length > 0) {
+       let rowsHtml = "";
+       for (let i = 0; i < (dta.length - 1); i++) {
+            var student = dta[i];
+            if (student) {
+                rowsHtml += 
+                  `<tr>
+                    <td><span class="badge bg-light text-dark border p-2">${i+1}</span></td>
+                    <td class="fw-bold text-secondary">${student.roll}</td>
+                    <td>${student.name}</td>
+                    <td class="text-center"><input id="${i+1}" class="mark_input" type="text" value="${student.mark || ''}"></td>
+                  </tr>`;
+            }
+        }
+       
+        var lastStudent = dta[dta.length - 1];
+        rowsHtml += `<tr class="table-danger font-weight-bold"> 
+            <td colspan="3" class="text-center fw-bold text-danger">প্রশ্নপত্রের পূর্ণ নম্বর</td>
+            <td class="text-center"><input id="${dta.length}" class="mark_input border-danger" type="text" value="${lastStudent.mark || ''}"></td>
+        </tr>`;
+
+       document.getElementById("mytbody").innerHTML = rowsHtml;           
+       document.querySelector(".btn_row").style.display="block";
+    } else {
+       document.getElementById("mytbody").innerHTML = `<tr><td colspan="4" class="text-center text-danger fw-bold py-4">কোনো তথ্য পাওয়া যায়নি!</td></tr>`;
+    }
+    setTimeout(removeLoader, 400);
+  }
+  
+  async function submitMarks(){
+    document.querySelector(".loader").style.display="flex";
+    var x = document.getElementById("mytbody").rows.length;
+    var marks = [];
+    for(let i = 1 ; i<= x; i++){
+       marks.push([document.getElementById(i).value]);
+    }
+
+    try {
+        await fetch(API_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                class: selectCls.value,
+                section: selectSec.value,
+                subject: selectSub.value,
+                marks: marks
+            })
+        });
+        showSuccessfullMsg();
+    } catch (error) {
+        console.error(error);
+        alert("মার্কস সাবমিট করা যায়নি!");
+        setTimeout(removeLoader, 400);
+    }
+  }
+
+  function showSuccessfullMsg(){
+    document.getElementById("msgContainer").style.display="block";
+    document.querySelector(".mark_table").innerHTML = `
+      <div class="main-card text-center py-5 border border-success">
+          <h3 class="text-success fw-bold mb-3">Marks Submitted Successfully!</h3>
+          <p class="text-muted">Submitted Marks দেখতে অনুগ্রহ করে পেজটি রিফ্রেশ (Refresh) করুন। ধন্যবাদ।</p>
+      </div>
+       <div class="text-center py-2 my-4">
+          <a href="index.html" class="btn btn-secondary">Back To Home Page</a>
+      </div>`;
+    setTimeout(removeLoader, 400);
+  }
+
+  function closeSuccessfullMsg(){ document.getElementById("msgContainer").style.display="none"; }
+
+  function countDown(){
+   setInterval(function(){
+    let totalTime = new Date("July 20, 2026, 10:00").getTime();
+    let currentTime = new Date().getTime();
+    let diff = totalTime - currentTime;
+    if(diff < 0) diff = 0;
+
+    document.getElementById("day").textContent = Math.floor(diff/(1000*60*60*24));
+    document.getElementById("hour").textContent = Math.floor(diff%(1000*60*60*24)/(1000*60*60));
+    document.getElementById("minute").textContent = Math.floor(diff%(1000*60*60)/(1000*60));
+    document.getElementById("second").textContent = Math.floor(diff%(1000*60)/(1000));
+   }, 1000);
+  }
+
+  // Initial Execution
+  addSubOptions();
+  addSectionTradeOptions();
+  countDown();
+</script>
+</body>
+</html>
