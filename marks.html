@@ -203,7 +203,7 @@
     <div class="row g-3">
       <div class="col-12">
           <div class="notice-box">
-              <marquee scrollamount="4">*** মধ্যবর্ষ পরীক্ষার ফলাফল <span style="color: red; font-weight:bold;"> ৩০-০৭-২০২৬ তারিখ সকাল ১০.০০ টায় </span> প্রকাশিত হবে। আপনাদেরকে এই অনলাইন সিস্টেমের মাধ্যমে আগামী <b> ২৮-০৭-২০২৬ </b> তারিখের মধ্যেই Marks Submit করার জন্য বলা হইল ***</marquee>
+              <div>মধ্যবর্ষ পরীক্ষার নম্বরসমুহ জমা দানের সময় ০৪/০৮/২০২৬ তারিখ পর্যন্ত বর্ধিত করা হয়েছে। এ সময়ের মধ্যে সকলেই submit করবেন। </div>
           </div>
       </div>
       <div class="col-12 d-flex flex-column align-items-center my-2">
@@ -249,13 +249,11 @@
                   <select id="select_sub" class="form-select"></select>
               </div>
               <div class="col-12 d-flex justify-content-center mt-4">
-                  <button id="btnFind" class="btn btn-modern px-5" onclick="">Search Students</button>
+                  <button id="btnFind" class="btn btn-modern px-5" onclick="fetchStudents()">Search Students</button>
               </div>
           </div>
       </div>
   </div>
-
-<div class="card text-center py-2 text-danger fw-bold"> নম্বর জমা দেওয়ার সময় ফুরিয়েছে!!!</div>
     
   <div id="msgContainer" class="container mb-4"></div>
 
@@ -279,7 +277,7 @@
       </div>
       <div class="btn_row row mt-4">
            <div class="col-12 d-flex justify-content-center">
-                <button id="btnSubmit" class="btn btn-modern bg-dark px-5" style="background: #0f172a; box-shadow: 0 4px 15px rgba(15,23,42,0.2);" onclick="">Submit Marks</button>
+                <button id="btnSubmit" class="btn btn-modern bg-dark px-5" style="background: #0f172a; box-shadow: 0 4px 15px rgba(15,23,42,0.2);" onclick="submitMarks()">Submit Marks</button>
            </div>
       </div>
   </div>
@@ -439,7 +437,7 @@
 
   function countDown(){
    setInterval(function(){
-    let totalTime = new Date("July 30, 2026, 10:00").getTime();
+    let totalTime = new Date("August 4, 2026, 10:00").getTime();
     let currentTime = new Date().getTime();
     let diff = totalTime - currentTime;
     if(diff < 0) diff = 0;
